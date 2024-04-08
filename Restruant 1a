@@ -43,3 +43,4 @@ predicted_revenue = model.predict(sample_input)[0]
 
 print("\nExample Prediction:")
 print(f"Predicted Monthly Revenue: ${predicted_revenue:.2f}")
+print("Wow! That's a lot of money!")
