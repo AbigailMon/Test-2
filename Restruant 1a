@@ -1,0 +1,45 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+# Define the path to your Excel file
+file_path ='C:\\Users\\MonfortoAS28\\Downloads\\Restaurant Revenue.xlsx'
+
+# Load the data from the Excel file into a pandas DataFrame
+df = pd.read_excel(file_path)
+
+# Display the first few rows of the DataFrame to inspect the data
+print("Sample data from the spreadsheet:")
+print(df.head())
+
+# Extract the input features and the target variable
+X = df[['Number_of_Customers', 'Menu_Price', 'Marketing_Spend', 
+        'Average_Customer_Spending', 'Promotions', 'Reviews']]
+y = df['Monthly_Revenue']
+
+# Split the data into training and testing sets (80% training, 20% testing)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create a linear regression model
+model = LinearRegression()
+
+# Train the model using the training sets
+model.fit(X_train, y_train)
+
+# Make predictions using the testing set
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print("\nModel Evaluation:")
+print(f"Mean Squared Error (MSE): {mse:.2f}")
+print(f"R^2 Score: {r2:.2f}")
+
+# Let's demonstrate using a sample input for prediction
+sample_input = [[100, 25, 1000, 20, 1, 4]]  # Example input values for prediction
+predicted_revenue = model.predict(sample_input)[0]
+
+print("\nExample Prediction:")
+print(f"Predicted Monthly Revenue: ${predicted_revenue:.2f}")
